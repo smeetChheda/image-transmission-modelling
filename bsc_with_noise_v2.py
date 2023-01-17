@@ -1,6 +1,8 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+from bsc import BinarySymmetricChannel
+
 
 def condProb (a, b, eps):
     return 1 - eps if a==b else eps
