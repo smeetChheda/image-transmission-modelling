@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.fftpack
 
 # These values come from running without noise
 # Simpler to store than to rerun everytime
@@ -103,13 +104,14 @@ normal_list = []
 for num in X:
     normal_list.append(num)
 
+normal_list_dct = np.real(scipy.fftpack.dct(normal_list, type=2, norm='ortho'))
 # eps = 0.1
 eps_arr = [0, 0.001, 0.01, 0.1, 0.5]
 R = 1
 
 dists = []
 for eps in eps_arr:
-    centersNoise, partitionsNoise,distortion_listNoise = lloyds_noise(normal_list, starting_centers[R], R, [], 1, eps)
+    centersNoise, partitionsNoise,distortion_listNoise = lloyds_noise(normal_list_dct, starting_centers[R], R, [], 1, eps)
     print(eps)
     print(centersNoise)
     print('\n')
@@ -118,7 +120,7 @@ for eps in eps_arr:
 plt.plot(eps_arr, dists, '.')
 plt.xlabel("Error")
 plt.ylabel("Distortion")
-plt.title("Distortion Error Graph - R = 2")
+plt.title("Distortion Error Graph - R = 1")
 plt.show()
 
 
